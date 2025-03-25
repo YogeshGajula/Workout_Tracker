@@ -90,11 +90,13 @@
             margin-bottom: 12px;
             gap: 10px;
             font-size: 1em;
+            flex-wrap: wrap; /* Allow the content to wrap in small screens */
         }
 
         .set span {
             flex: 1;
             font-size: 1em;
+            white-space: nowrap; /* Prevent text from breaking into multiple lines */
         }
 
         input[type="number"] {
@@ -103,6 +105,8 @@
             font-size: 1em;
             border: 1px solid #ccc;
             border-radius: 5px;
+            box-sizing: border-box; /* Ensure inputs respect the container's width */
+            max-width: 45%; /* Make sure the inputs are not too wide */
         }
 
         input[type="number"]:focus {
@@ -141,11 +145,11 @@
             }
 
             .set {
-                font-size: 0.9em;
+                flex-direction: column; /* Stack the inputs vertically on small screens */
             }
 
-            .exercise h4 {
-                font-size: 1.1em;
+            input[type="number"] {
+                max-width: 100%; /* Allow inputs to use full width on mobile */
             }
         }
 
