@@ -101,8 +101,6 @@
         <button onclick="goBack()">Back</button>
         <div id="workout-list"></div>
         <div id="export-buttons">
-            <button onclick="saveData()">Save Progress</button>
-            <button onclick="restoreData()">Restore Progress</button>
             <button onclick="prepareExportPDF()">Export PDF</button>
         </div>
     </div>
@@ -163,54 +161,6 @@
         function goBack() {
             document.getElementById("day-selection").style.display = "grid";
             document.getElementById("workout-container").style.display = "none";
-        }
-
-        function saveData() {
-            if (currentDay === null) {
-                alert('Please select a workout day first.');
-                return;
-            }
-            const workoutData = {};
-            document.querySelectorAll('.exercise').forEach(exercise => {
-                const exerciseName = exercise.querySelector('h4').textContent;
-                workoutData[exerciseName] = [];
-                exercise.querySelectorAll('.set').forEach((set, index) => {
-                    const weightInput = set.querySelector('input[type="number"][placeholder="Weight"]');
-                    const repsInput = set.querySelector('input[type="number"][placeholder="Reps"]');
-                    workoutData[exerciseName].push({
-                        set: index + 1,
-                        weight: weightInput.value,
-                        reps: repsInput.value
-                    });
-                });
-            });
-            localStorage.setItem(`workoutDay${currentDay}`, JSON.stringify(workoutData));
-            alert('Workout data saved!');
-        }
-
-        function restoreData() {
-            if (currentDay === null) {
-                alert('Please select a workout day first.');
-                return;
-            }
-            const savedData = localStorage.getItem(`workoutDay${currentDay}`);
-            if (savedData) {
-                const workoutData = JSON.parse(savedData);
-                document.querySelectorAll('.exercise').forEach(exercise => {
-                    const exerciseName = exercise.querySelector('h4').textContent;
-                    if (workoutData[exerciseName]) {
-                        exercise.querySelectorAll('.set').forEach((set, index) => {
-                            const weightInput = set.querySelector('input[type="number"][placeholder="Weight"]');
-                            const repsInput = set.querySelector('input[type="number"][placeholder="Reps"]');
-                            const setData = workoutData[exerciseName][index];
-                            weightInput.value = setData.weight;
-                            repsInput.value = setData.reps;
-                        });
-                    }
-                });
-            } else {
-                alert('No saved workout data found for this day.');
-            }
         }
 
         function prepareExportPDF() {
